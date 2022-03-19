@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @JsonDeserialize
-public class AccountDto {
+public class AccountDTO {
 	private String id;
 	private Double balance;
 

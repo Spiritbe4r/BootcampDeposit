@@ -1,7 +1,7 @@
 package com.bootcamp.bankdeposit.controller;
 
 import com.bootcamp.bankdeposit.bean.Deposit;
-import com.bootcamp.bankdeposit.dto.DepositDto;
+import com.bootcamp.bankdeposit.dto.DepositDTO;
 import com.bootcamp.bankdeposit.repository.DepositRepository;
 import com.bootcamp.bankdeposit.service.DepositService;
 import org.junit.jupiter.api.Assertions;
@@ -21,14 +21,14 @@ class DepositControllerTest {
     @InjectMocks
     private DepositController controller;
 
-    private DepositDto dto;
-    Flux<DepositDto> fluxDto;
+    private DepositDTO dto;
+    Flux<DepositDTO> fluxDto;
     Flux<Deposit> fluxDo;
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
 
-        dto = new DepositDto("098765432",13100.00,"USD","007","","876543222","Pepe",
+        dto = new DepositDTO("098765432",13100.00,"USD","007","","876543222","Pepe",
                 "8765432","");
         fluxDto = Flux.just(dto);
         fluxDo = Flux.just(new Deposit("098765432",13100.00,"USD","007","","876543222","Pepe","8765432",""));

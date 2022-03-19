@@ -1,10 +1,11 @@
 package com.bootcamp.bankdeposit.service;
 
-import com.bootcamp.bankdeposit.dto.AccountDto;
-import com.bootcamp.bankdeposit.dto.DepositDto;
+
+import com.bootcamp.bankdeposit.dto.AccountDTO;
+import com.bootcamp.bankdeposit.dto.DepositDTO;
 import com.bootcamp.bankdeposit.repository.DepositRepository;
 import com.bootcamp.bankdeposit.util.AppUtils;
-import com.bootcamp.bankdeposit.util.Constant;
+import com.bootcamp.bankdeposit.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +36,14 @@ public class DepositServiceImpl implements DepositService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public Flux<DepositDto> getDeposit() {
+    public Flux<DepositDTO> getDeposit() {
 
         LOGGER.debug("In getDeposit()");
         return depositRepository.findAll().map(AppUtils::entityToDto);
     }
 
     @Override
-    public Mono<DepositDto> getDepositById(String id) {
+    public Mono<DepositDTO> getDepositById(String id) {
         return depositRepository.findById(id).map(AppUtils::entityToDto);
     }
 /*
@@ -58,7 +59,7 @@ public class DepositServiceImpl implements DepositService {
                         .depositNumber(null).build()));
     }*/
 
-    public Mono<DepositDto> saveDeposit(DepositDto depositDto) {
+    public Mono<DepositDTO> saveDeposit(DepositDTO depositDto) {
 //    public Mono<DepositDto> saveDeposit(Mono<DepositDto> depositDto) {
         LOGGER.debug("url a invocar:"+urlApigateway+urlAccounts);
         /*depositDtoMono.subscribe(p ->
@@ -99,7 +100,7 @@ public class DepositServiceImpl implements DepositService {
 */
 
         try {
-            AccountDto account = restTemplate.getForObject(urlApigateway + urlAccounts + depositDto.getToAccountId(), AccountDto.class);
+            AccountDTO account = restTemplate.getForObject(urlApigateway + urlAccounts + depositDto.getToAccountId(), AccountDTO.class);
             LOGGER.debug("restTemplate:" + account.getAccountNumber());
 
             if (approveDeposit(account, depositDto)) {
@@ -119,14 +120,14 @@ public class DepositServiceImpl implements DepositService {
         }
     }
 
-    private Mono<DepositDto> savingDeposit(DepositDto depositDto) {
+    private Mono<DepositDTO> savingDeposit(DepositDTO depositDto) {
         LOGGER.debug("Service.savingDeposit");
         return Mono.just(depositDto).map(AppUtils::dtoToEntity)
                 .flatMap(depositRepository::insert)
                 .map(AppUtils::entityToDto);
     }
 
-    private void updateBalanceAccount(AccountDto account) {
+    private void updateBalanceAccount(AccountDTO account) {
         account.setMovementPerMonth(account.getMovementPerMonth()+1);
         restTemplate.put(urlApigateway+urlAccounts+account.getId(),account);
     }
@@ -139,24 +140,24 @@ public class DepositServiceImpl implements DepositService {
     *   -Plazo  fijo:  libre  de  comisión  por  mantenimiento, solo  permite  un movimiento de
     *   retiro o depósito en un día específico del mes.
      */
-    private boolean approveDeposit(AccountDto account, DepositDto depositDto) {
+    private boolean approveDeposit(AccountDTO account, DepositDTO depositDto) {
         boolean resp = false;
-        if(Constant.TIPO_CUENTA_PLAZO.equalsIgnoreCase(account.getAccountType())) {
-            if(Constant.CAN_BE_DEPOSIT.equalsIgnoreCase(account.getCanBeDeposit())){
+        if(Constants.TIPO_CUENTA_PLAZO.equalsIgnoreCase(account.getAccountType())) {
+            if(Constants.CAN_BE_DEPOSIT.equalsIgnoreCase(account.getCanBeDeposit())){
 
                 resp = true;
             }
-        } else if(Constant.TIPO_CUENTA_AHORRO.equalsIgnoreCase(account.getAccountType())){
+        } else if(Constants.TIPO_CUENTA_AHORRO.equalsIgnoreCase(account.getAccountType())){
             if(account.getMovementPerMonth() <= account.getMaxLimitMovementPerMonth()) {
                 resp = true;
             }
-        } else if (Constant.TIPO_CUENTA_CORRIENTE.equalsIgnoreCase(account.getAccountType())){
+        } else if (Constants.TIPO_CUENTA_CORRIENTE.equalsIgnoreCase(account.getAccountType())){
             resp = true;
         }
         return resp;
     }
 
-    private void calculateBalance(AccountDto account, DepositDto depositDto) throws NumberFormatException{
+    private void calculateBalance(AccountDTO account, DepositDTO depositDto) throws NumberFormatException{
 
         BigDecimal balance =  BigDecimal.valueOf(account.getBalance());
         BigDecimal amount = BigDecimal.valueOf(depositDto.getAmount());
@@ -166,7 +167,7 @@ public class DepositServiceImpl implements DepositService {
 
     }
 
-    public Mono<DepositDto> updateDeposit(Mono<DepositDto> DepositDtoMono, String id) {
+    public Mono<DepositDTO> updateDeposit(Mono<DepositDTO> DepositDtoMono, String id) {
         return depositRepository.findById(id)
                 .flatMap(p -> DepositDtoMono.map(AppUtils::dtoToEntity)
                         .doOnNext(e -> e.setId(id)))

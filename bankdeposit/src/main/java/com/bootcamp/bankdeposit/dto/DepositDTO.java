@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class DepositDto {
+public class DepositDTO {
 	private String id;
 	private Double amount;
 	private String currency;
@@ -18,7 +18,7 @@ public class DepositDto {
 	private String depositor;
 	private String timestamp;
 
-	public DepositDto(Double amount, String currency, String idClient, String fromAccountNumber, String toAccountNumber, String depositor, String timestamp) {
+	public DepositDTO(Double amount, String currency, String idClient, String fromAccountNumber, String toAccountNumber, String depositor, String timestamp) {
 		this.amount = amount;
 		this.currency = currency;
 		this.idClient = idClient;

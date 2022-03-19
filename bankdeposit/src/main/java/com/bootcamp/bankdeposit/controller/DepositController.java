@@ -1,7 +1,7 @@
 package com.bootcamp.bankdeposit.controller;
 
-import com.bootcamp.bankdeposit.dto.AccountDto;
-import com.bootcamp.bankdeposit.dto.DepositDto;
+import com.bootcamp.bankdeposit.dto.AccountDTO;
+import com.bootcamp.bankdeposit.dto.DepositDTO;
 import com.bootcamp.bankdeposit.service.DepositService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,20 +32,20 @@ public class DepositController {
     private DepositService depositService;
 
     @GetMapping
-    public Flux<DepositDto> getDeposit(){
+    public Flux<DepositDTO> getDeposit(){
         LOGGER.debug("Getting Deposit!");
         LOGGER.debug("Application cloud property: " + appName);
         return depositService.getDeposit();
     }
 
     @GetMapping("/{id}")
-    public Mono<DepositDto> getDeposit(@PathVariable String id){
+    public Mono<DepositDTO> getDeposit(@PathVariable String id){
         LOGGER.debug("Getting a deposit!");
         return depositService.getDepositById(id);
     }
 
     @PostMapping
-    public Mono<DepositDto> saveDeposit(@RequestBody DepositDto depositDtoMono){
+    public Mono<DepositDTO> saveDeposit(@RequestBody DepositDTO depositDtoMono){
         LOGGER.debug("Saving deposit!");
        /* Mono<AccountDto> monoDto = webClient.build().get().uri(urlApigateway+urlAccounts,depositDtoMono.getToAccountId())
                 .retrieve()
@@ -56,7 +56,7 @@ public class DepositController {
     }
 
     @PutMapping("/{id}")
-    public Mono<DepositDto> updateDeposit(@RequestBody Mono<DepositDto> depositDtoMono, @PathVariable String id){
+    public Mono<DepositDTO> updateDeposit(@RequestBody Mono<DepositDTO> depositDtoMono, @PathVariable String id){
         LOGGER.debug("Updating deposit!");
         return depositService.updateDeposit(depositDtoMono,id);
     }
