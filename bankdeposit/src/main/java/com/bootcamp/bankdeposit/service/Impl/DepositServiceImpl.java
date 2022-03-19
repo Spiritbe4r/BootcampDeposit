@@ -1,9 +1,11 @@
-package com.bootcamp.bankdeposit.service;
+package com.bootcamp.bankdeposit.service.Impl;
 
 
+import com.bootcamp.bankdeposit.bean.Deposit;
 import com.bootcamp.bankdeposit.dto.AccountDTO;
 import com.bootcamp.bankdeposit.dto.DepositDTO;
 import com.bootcamp.bankdeposit.repository.DepositRepository;
+import com.bootcamp.bankdeposit.service.DepositService;
 import com.bootcamp.bankdeposit.util.AppUtils;
 import com.bootcamp.bankdeposit.util.Constants;
 import org.slf4j.Logger;
@@ -177,5 +179,32 @@ public class DepositServiceImpl implements DepositService {
 
     public Mono<Void> deleteDeposit(String id) {
         return depositRepository.deleteById(id);
+    }
+
+    @Override
+    public Flux<Deposit> getAll() {
+        return depositRepository.findAll();
+    }
+
+    @Override
+    public Mono<Deposit> getById(String s) {
+        return depositRepository.findById(s);
+    }
+
+    @Override
+    public Mono<Deposit> save(Deposit obj) {
+        return save(obj);
+    }
+
+    @Override
+    public Mono<Deposit> update(Mono<Deposit> obj, String s) {
+        return depositRepository.findById(s)
+                .doOnNext(e-> e.setId(s))
+                .flatMap(depositRepository::save);
+    }
+
+    @Override
+    public Mono<Void> delete(String s) {
+        return depositRepository.deleteById(s);
     }
 }

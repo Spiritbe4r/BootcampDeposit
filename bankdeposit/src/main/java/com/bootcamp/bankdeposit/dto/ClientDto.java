@@ -2,6 +2,7 @@ package com.bootcamp.bankdeposit.dto;
 
 import com.bootcamp.bankdeposit.bean.ClientType;
 import lombok.*;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 
 @Getter
 @Setter
