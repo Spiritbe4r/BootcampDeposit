@@ -15,12 +15,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class BankdepositApplication {
 
 	@Value("${microservices-urls.api-transaction}")
-	private String API_TRANSACTION;
+	private String apiTransaction;
 
 	@Bean
 	public WebClient webClient(WebClient.Builder builder){
 		return builder
-				.baseUrl(API_TRANSACTION)
+				.baseUrl(apiTransaction)
 				.defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
 				.build();
 	}
@@ -30,7 +30,7 @@ public class BankdepositApplication {
 	}
 
 	@Bean
-	public RestTemplate restTemplate(){
-		 return new RestTemplate();
+	public RestTemplate restTemplate() {
+		return new RestTemplate();
 	}
 }

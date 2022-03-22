@@ -1,7 +1,7 @@
 package com.bootcamp.bankdeposit.controller;
 
-import com.bootcamp.bankdeposit.bean.Deposit;
-import com.bootcamp.bankdeposit.dto.DepositDTO;
+import com.bootcamp.bankdeposit.models.entities.Deposit;
+import com.bootcamp.bankdeposit.models.dto.DepositDTO;
 import com.bootcamp.bankdeposit.repository.DepositRepository;
 import com.bootcamp.bankdeposit.service.DepositService;
 import org.junit.jupiter.api.Assertions;
@@ -36,7 +36,7 @@ class DepositControllerTest {
 
     @Test
     void getDeposit() {
-        Mockito.when(depositService.getDeposit()).thenReturn(fluxDto);
+        Mockito.when(depositService.getDeposits()).thenReturn(fluxDto);
         Assertions.assertNotNull(controller.getDeposit());
     }
 }

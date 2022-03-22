@@ -3,19 +3,15 @@ server:
 
 spring:
   application:
-    name: bankdeposit-microservice
+    name: deposit-microservice
   config:
-    import: configserver:http://localhost:8887
+    import: configserver:http://192.168.101.7:8887
   profiles:
     active: dev
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
 
 health:
   config:

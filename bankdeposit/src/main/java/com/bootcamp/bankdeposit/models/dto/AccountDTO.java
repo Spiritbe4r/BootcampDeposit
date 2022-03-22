@@ -1,0 +1,29 @@
+package com.bootcamp.bankdeposit.models.dto;
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@JsonDeserialize
+public class AccountDTO {
+  private String id;
+  private Double balance;
+
+  private String accountNumber;
+  private String accountType;
+
+  private String currency;
+  private String canBeDeposit;
+
+  private int maxLimitMovementPerMonth;
+  private int movementPerMonth;
+
+}

@@ -1,22 +1,53 @@
 package com.bootcamp.bankdeposit.service;
 
-import com.bootcamp.bankdeposit.bean.Deposit;
-import com.bootcamp.bankdeposit.dto.DepositDTO;
+import com.bootcamp.bankdeposit.models.dto.DepositDTO;
+import com.bootcamp.bankdeposit.models.entities.Deposit;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface DepositService extends CrudService<Deposit,String> {
+public interface DepositService extends CrudService<Deposit, String> {
 
-    Flux<DepositDTO> getDeposit();
-    Mono<DepositDTO> getDepositById(String id);
+  /**
+   * get all deposits flux.
+   *
+   * @return the flux
+   */
+  Flux<DepositDTO> getDeposits();
 
-    //Mono<DepositDto> getDepositByName(String name);
+  /**
+   * get one deposit by mono.
+   *
+   * @param id the request
+   * @return the mono
+   */
+  Mono<DepositDTO> getDepositById(String id);
 
-    //Mono<DepositDto> getDepositByDepositNumber(String depositNumber);
+  //Mono<DepositDto> getDepositByName(String name);
 
-    Mono<DepositDTO> saveDeposit(DepositDTO depositDtoMono);
+  //Mono<DepositDto> getDepositByDepositNumber(String depositNumber);
 
-    Mono<DepositDTO> updateDeposit(Mono<DepositDTO> depositDtoMono, String id);
+  /**
+   * save a deposit mono.
+   *
+   * @param depositDto the json info
+   * @return the mono
+   */
+  Mono<DepositDTO> saveDeposit(DepositDTO depositDto);
 
-    Mono<Void> deleteDeposit(String id);
+  /**
+   * get one deposit by mono.
+   *
+   * @param id the deposit id
+   * @return the mono
+   * @body depositDtomono
+   */
+  Mono<DepositDTO> updateDeposit(Mono<DepositDTO> depositDtomono, String id);
+
+  /**
+   * delete one deposit mono.
+   *
+   * @param id the deposit id
+   * @return void
+   */
+  Mono<Void> deleteDeposit(String id);
 }

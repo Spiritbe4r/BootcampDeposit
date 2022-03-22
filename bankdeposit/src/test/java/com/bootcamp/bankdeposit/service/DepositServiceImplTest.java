@@ -1,9 +1,9 @@
 package com.bootcamp.bankdeposit.service;
 
-import com.bootcamp.bankdeposit.bean.Deposit;
-import com.bootcamp.bankdeposit.dto.DepositDTO;
+import com.bootcamp.bankdeposit.models.entities.Deposit;
+import com.bootcamp.bankdeposit.models.dto.DepositDTO;
 import com.bootcamp.bankdeposit.repository.DepositRepository;
-import com.bootcamp.bankdeposit.service.Impl.DepositServiceImpl;
+import com.bootcamp.bankdeposit.service.impl.DepositServicesImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ class DepositServiceImplTest {
     @Mock
     private DepositRepository depositRepository;
     @InjectMocks
-    private DepositServiceImpl service;
+    private DepositServicesImpl service;
 
     private Flux<Deposit> fluxDto;
 
@@ -36,7 +36,7 @@ class DepositServiceImplTest {
     void getDeposit() {
         Mockito.when(depositRepository.findAll()).thenReturn(fluxDto);
 
-        Assertions.assertNotNull(service.getDeposit());
+        Assertions.assertNotNull(service.getDeposits());
     }
 
     @Test
